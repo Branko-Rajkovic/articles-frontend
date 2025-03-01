@@ -21,7 +21,7 @@ export default function Login() {
     } catch (err) {
       console.log(err);
     } finally {
-      console.log("end of register request");
+      console.log("end of registration request");
     }
   });
 

@@ -1,56 +1,16 @@
-import { useEffect, useReducer, useState } from "react";
 import { motion } from "framer-motion";
-import axios from "axios";
 import { NavLink } from "react-router-dom";
-
-// const initialState = {
-//   article: {},
-//   status: false,
-// };
-
-// function reducer(state, action) {
-//   console.log("action", action.payload);
-//   switch (action.type) {
-//     case "dataFetched":
-//       return {
-//         ...state,
-//         article: { ...action.payload },
-//         status: "ready",
-//       };
-//     case "dataFailed":
-//       return { ...state, status: "error" };
-//     default:
-//       throw new Error("Action unknown");
-//   }
-// }
+import useFetchData from "../hooks/useFetchData";
+import Loader from "./Loader";
+import Error from "../pages/Error";
 
 export default function Content() {
-  const [articles, setArticles] = useState([]);
-  // const [state, dispatch] = useReducer(reducer, initialState);
-  // const { article, status } = state;
+  const { data, loading, error } = useFetchData(
+    "http://127.0.0.1:3000/api/v1/articles/"
+  );
 
-  useEffect(function () {
-    async function fetchData() {
-      try {
-        const response = await axios.get(
-          "http://127.0.0.1:3000/api/v1/articles"
-        );
-        // const jsonRes = await response.json();
-        // console.log(jsonRes);
-        console.log("resp", response.data.data.docs);
-        const resData = response.data.data.docs;
-        console.log("response data", resData);
-
-        setArticles((articles) => resData);
-      } catch (err) {
-        console.log(err);
-        // dispatch({ type: "dataFailed" });
-      } finally {
-        console.log("end of fetch");
-      }
-    }
-    fetchData();
-  }, []);
+  if (loading) return <Loader />;
+  if (error) return <Error />;
 
   return (
     <main className="min-h-screen m-4">
@@ -59,24 +19,9 @@ export default function Content() {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
       >
-        {/* {status === "ready" && (
-          <>
-            <h2 className="text-2xl font-bold">{article.title}</h2>
-            <p>{article.summary}</p>
-            <h3>{article.contentTopics[0]}</h3>
-            <p>{article.paragraphs[0]}</p>
-            <ul>
-              {article.lists[0].split(" ").map((item, index) => (
-                <li key={index}>{item}</li>
-              ))}
-            </ul>
-            <h3>{article.contentTopics[1]}</h3>
-            <p>{article.paragraphs[1]}</p>
-          </>
-        )} */}
-        {articles.length && (
+        {!loading && (
           <ul>
-            {articles.map((article) => {
+            {data.data.docs.map((article) => {
               const id = article.id;
               const title = article.title;
               const summary = article?.summary;
@@ -88,7 +33,7 @@ export default function Content() {
                 >
                   <h3 className="text-xl font-semibold">{title}</h3>
                   <p>{summary}</p>
-                  <NavLink to={`/${id}`}>Read more ...</NavLink>
+                  <NavLink to={`/articles/${id}`}>Read more ...</NavLink>
                 </li>
               );
             })}
