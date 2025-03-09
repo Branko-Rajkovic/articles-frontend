@@ -2,7 +2,6 @@ import Content from "../components/Content";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { motion } from "framer-motion";
-import Login from "../components/Login";
 
 export default function Home() {
   return (
@@ -14,7 +13,6 @@ export default function Home() {
           exit={{ opacity: 0 }}
         >
           <Header />
-          <Login />
           <Content />
           <Footer />
         </motion.div>

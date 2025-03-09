@@ -1,13 +1,13 @@
 import { useRef, useState, useEffect } from "react";
 import useAuth from "../hooks/useAuth";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 export default function Login() {
   const { setAuth } = useAuth();
 
   // const navigate = useNavigate();
-  const location = useLocation();
+  // const location = useLocation();
   // const from = location.state?.from?.pathname || "/";
 
   const emailRef = useRef();
@@ -41,10 +41,20 @@ export default function Login() {
       const token = response?.data?.token;
       console.log(token);
       const role = response?.data?.data?.user?.role;
-      console.log(role);
-      setAuth({ email, password, role, token });
+      console.log("email", email);
+      console.log("password", password);
+      console.log("role", role);
+      setAuth(() => {
+        return {
+          email,
+          password,
+          role,
+          token,
+        };
+      });
       setEmail("");
       setPassword("");
+
       // navigate(from, { replace: true });
     } catch (err) {
       if (!err?.response) {
@@ -69,10 +79,17 @@ export default function Login() {
       >
         {errMsg}
       </p>
-      <h1>Sign In</h1>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="email">email:</label>
+
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col p-2 m-2 border rounded-sm"
+      >
+        <h1 className="font-semibold text-slate-200">Log In</h1>
+        <label htmlFor="email" className="text-slate-300">
+          email:
+        </label>
         <input
+          className="px-2 rounded-sm bg-slate-300"
           type="text"
           id="email"
           ref={emailRef}
@@ -82,20 +99,28 @@ export default function Login() {
           required
         />
 
-        <label htmlFor="password">Password:</label>
+        <label htmlFor="password" className="text-slate-300">
+          Password:
+        </label>
         <input
+          className="px-2 rounded-sm bg-slate-300"
           type="password"
           id="password"
+          autoComplete="off"
           onChange={(e) => setPassword(e.target.value)}
           value={password}
           required
         />
-        <button>Sign In</button>
+        <button
+          type="submit"
+          className="px-4 py-1 mx-2 my-1 rounded-sm text-slate-200 bg-slate-600 hover:bg-emerald-200 hover:text-slate-600"
+        >
+          Log In
+        </button>
       </form>
-      <p>
+      <p className="m-2 text-slate-300">
         Need an Account?
-        <br />
-        <span className="line">
+        <span className="px-4 py-1 m-2 my-1 rounded-sm text-slate-200 bg-slate-600 hover:bg-emerald-200 hover:text-slate-600">
           <Link to="/register">Sign Up</Link>
         </span>
       </p>
