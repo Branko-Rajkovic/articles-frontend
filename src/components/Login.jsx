@@ -121,7 +121,7 @@ export default function Login() {
       <p className="m-2 text-slate-300">
         Need an Account?
         <span className="px-4 py-1 m-2 my-1 rounded-sm text-slate-200 bg-slate-600 hover:bg-emerald-200 hover:text-slate-600">
-          <Link to="/register">Sign Up</Link>
+          <Link to="/signin">Sign In</Link>
         </span>
       </p>
     </section>

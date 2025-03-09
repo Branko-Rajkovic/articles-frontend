@@ -9,7 +9,7 @@ export default function RequireAuth({ userRole }) {
 
   console.log(auth);
 
-  return allowedRoles.includes(userRole) ? (
+  return allowedRoles.includes(userRole) && userRole === auth.role ? (
     <Outlet />
   ) : auth?.role ? (
     <Navigate to="/error" state={{ from: location }} replace />

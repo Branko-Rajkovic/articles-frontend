@@ -9,9 +9,7 @@ export const AuthProvider = ({ children }) => {
     auth,
     setAuth,
   };
-  return (
-    <AuthContext.Provider value={ctxValue}>{children}</AuthContext.Provider>
-  );
+  return <AuthContext value={ctxValue}>{children}</AuthContext>;
 };
 
 export default AuthContext;

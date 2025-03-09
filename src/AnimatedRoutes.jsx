@@ -8,6 +8,7 @@ import Article from "./pages/Article";
 import AddNewArticle from "./pages/AddNewArticle";
 import RequireAuth from "./components/RequireAuth";
 import Unauthorized from "./pages/Unauthorized";
+import Signin from "./pages/Signin";
 
 export default function AnimatedRoutes() {
   const location = useLocation();
@@ -19,6 +20,7 @@ export default function AnimatedRoutes() {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/articles/:articleId" element={<Article />} />
+          <Route path="/signin" element={<Signin />} />
 
           <Route element={<RequireAuth userRole={"admin"} />}>
             <Route path="/new-article" element={<AddNewArticle />} />
