@@ -87,6 +87,7 @@ export default function AddNewArticle() {
   }
 
   function saveArticle() {
+    setIsLoading(true);
     return 1;
   }
   return (
