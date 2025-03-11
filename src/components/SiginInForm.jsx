@@ -1,30 +1,36 @@
 import { useState } from "react";
 import InputField from "./InputField";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function SiginInForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (password !== confirmPassword) {
+    if (password !== passwordConfirm) {
       alert("Passwords do not match");
       return;
     }
-    console.log(name);
+
     try {
+      const newUser = { name, email, password, passwordConfirm };
+      console.log(newUser);
       const response = await axios.post(
         "http://127.0.0.1:3000/api/v1/users/signup",
-        { name, email, password, confirmPassword },
+        JSON.stringify(newUser),
         {
           headers: { "Content-Type": "application/json" },
         }
       );
-      console.log(JSON.stringify(response?.data));
-      console.log("Form submitted:", name, email, password, confirmPassword);
+      console.log(response?.data);
+      console.log("Form submitted:", name, email, password, passwordConfirm);
+      response?.data.status === "succes" &&
+        navigate("/confirm-email", { replace: true });
     } catch (err) {
       console.log(err);
     }
@@ -58,8 +64,8 @@ export default function SiginInForm() {
       <InputField
         type="password"
         name="Confirm Password"
-        field={confirmPassword}
-        setField={setConfirmPassword}
+        field={passwordConfirm}
+        setField={setPasswordConfirm}
         required={true}
       />
 
