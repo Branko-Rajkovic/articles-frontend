@@ -4,7 +4,7 @@ import useAuth from "../hooks/useAuth";
 
 function Header() {
   const { auth } = useAuth();
-  console.log(auth);
+  console.log("auth", auth);
   return (
     <header>
       <div className="m-2">
@@ -32,7 +32,19 @@ function Header() {
           alt="globe"
           className="h-48 scale-x-[-1]"
         />
-        <Login />
+        {auth.name ? (
+          <div>
+            <img
+              src={`http://127.0.0.1:3000/images/users/${auth.photo}`}
+              alt="page-404-image"
+              className="w-12 m-8 border-2 rounded-full"
+            />
+            <h2 className="m-4 font-semibold text-slate-200">Hi {auth.name}</h2>
+            <NavLink to="/my-account">My Account</NavLink>
+          </div>
+        ) : (
+          <Login />
+        )}
       </div>
     </header>
   );

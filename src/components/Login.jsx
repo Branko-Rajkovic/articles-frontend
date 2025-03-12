@@ -41,6 +41,8 @@ export default function Login() {
       const token = response?.data?.token;
       console.log(token);
       const role = response?.data?.data?.user?.role;
+      const photo = response?.data?.data?.user?.photo;
+      const name = response?.data?.data?.user?.name;
       console.log("email", email);
       console.log("password", password);
       console.log("role", role);
@@ -50,6 +52,8 @@ export default function Login() {
           password,
           role,
           token,
+          photo,
+          name,
         };
       });
       setEmail("");

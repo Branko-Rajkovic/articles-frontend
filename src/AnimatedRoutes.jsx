@@ -10,6 +10,7 @@ import RequireAuth from "./components/RequireAuth";
 import Unauthorized from "./pages/Unauthorized";
 import Signin from "./pages/Signin";
 import ConfirmEmail from "./pages/ConfirmEmail";
+import MyAccount from "./pages/MyAccount";
 
 export default function AnimatedRoutes() {
   const location = useLocation();
@@ -22,6 +23,10 @@ export default function AnimatedRoutes() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/signin" element={<Signin />} />
           <Route path="confirm-email" element={<ConfirmEmail />} />
+
+          <Route element={<RequireAuth userRole={"user"} />}>
+            <Route path="/my-account" element={<MyAccount />} />
+          </Route>
 
           <Route element={<RequireAuth userRole={"admin"} />}>
             <Route path="/new-article" element={<AddNewArticle />} />
