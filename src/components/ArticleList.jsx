@@ -4,7 +4,7 @@ import useFetchData from "../hooks/useFetchData";
 import Loader from "./Loader";
 import Error from "../pages/Error";
 
-export default function Content() {
+export default function ArticleList() {
   const { data, loading, error } = useFetchData(
     "http://127.0.0.1:3000/api/v1/articles/"
   );

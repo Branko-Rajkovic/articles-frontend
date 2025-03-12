@@ -1,4 +1,4 @@
-import Content from "../components/Content";
+import ArticleList from "../components/ArticleList";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { motion } from "framer-motion";
@@ -13,7 +13,7 @@ export default function Home() {
           exit={{ opacity: 0 }}
         >
           <Header />
-          <Content />
+          <ArticleList />
           <Footer />
         </motion.div>
       </div>
