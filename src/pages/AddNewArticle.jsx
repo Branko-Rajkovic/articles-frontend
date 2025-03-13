@@ -1,5 +1,4 @@
 import { useReducer, useState } from "react";
-import Header from "../components/Header";
 
 const initialState = {
   title: "",
@@ -102,7 +101,6 @@ export default function AddNewArticle() {
   }
   return (
     <div>
-      <Header />
       <div className="flex h-screen bg-gray-100">
         {/* Sidebar */}
         <div className="flex flex-col w-64 p-4 bg-white shadow-md">
