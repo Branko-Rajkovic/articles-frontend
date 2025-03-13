@@ -33,14 +33,15 @@ function Header() {
           className="h-48 scale-x-[-1]"
         />
         {auth.name ? (
-          <div>
-            <img
-              src={`http://127.0.0.1:3000/images/users/${auth.photo}`}
-              alt="page-404-image"
-              className="w-12 m-8 border-2 rounded-full"
-            />
-            <h2 className="m-4 font-semibold text-slate-200">Hi {auth.name}</h2>
-            <NavLink to="/my-account">My Account</NavLink>
+          <div className="flex flex-col items-center justify-center">
+            <NavLink to="/my-account">
+              <img
+                src={`http://127.0.0.1:3000/images/users/${auth.photo}`}
+                alt="page-404-image"
+                className="w-12 m-2 border-2 rounded-full"
+              />
+            </NavLink>
+            <h2 className="mx-2 font-semibold text-slate-200">{auth.name}</h2>
           </div>
         ) : (
           <Login />

@@ -11,6 +11,7 @@ import Unauthorized from "./pages/Unauthorized";
 import Signin from "./pages/Signin";
 import ConfirmEmail from "./pages/ConfirmEmail";
 import MyAccount from "./pages/MyAccount";
+import Test from "./pages/test";
 
 export default function AnimatedRoutes() {
   const location = useLocation();
@@ -22,7 +23,8 @@ export default function AnimatedRoutes() {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/signin" element={<Signin />} />
-          <Route path="confirm-email" element={<ConfirmEmail />} />
+          <Route path="/confirm-email" element={<ConfirmEmail />} />
+          <Route path="/test" element={<Test />} />
 
           <Route element={<RequireAuth userRole={"user"} />}>
             <Route path="/my-account" element={<MyAccount />} />
