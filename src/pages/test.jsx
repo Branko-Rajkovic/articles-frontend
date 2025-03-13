@@ -7,13 +7,10 @@ const initialState = {
   subtitles: [],
   paragraphs: [],
   images: [],
-  layout: [],
-  order: [],
+  layoutOrder: [],
 };
 
 function reducer(state, action) {
-  if (!(action.type === "title" || action.type === "summary"))
-    state.layout.push({ field: action.payload, type: action.type });
   switch (action.type) {
     case "title":
       return {
@@ -24,8 +21,8 @@ function reducer(state, action) {
       return {
         ...state,
         paragraphs: [...state.paragraphs, action.payload],
-        order: [
-          ...state.order,
+        layoutOrder: [
+          ...state.layoutOrder,
           { type: "paragraph", index: state.paragraphs.length },
         ],
       };
@@ -38,8 +35,8 @@ function reducer(state, action) {
       return {
         ...state,
         subtitles: [...state.subtitles, action.payload],
-        order: [
-          ...state.order,
+        layoutOrder: [
+          ...state.layoutOrder,
           { type: "subtitle", index: state.subtitles.length },
         ],
       };
@@ -47,7 +44,10 @@ function reducer(state, action) {
       return {
         ...state,
         images: [...state.images, action.payload],
-        order: [...state.order, { type: "image", index: state.images.length }],
+        layoutOrder: [
+          ...state.layoutOrder,
+          { type: "image", index: state.images.length },
+        ],
       };
 
     default:
@@ -191,24 +191,19 @@ export default function Test() {
           <div>
             <h2 className="text-3xl font-semibold">{state.title}</h2>
             <p>{state.summary}</p>
-            {state.layout.map((element, index) => {
-              if (element.type === "image") {
-                return <img key={index} src={element.field} />;
-              }
-              return (
-                <div
-                  className={`${
-                    element.type === "subtitle" ? "font-semibold text-xl" : ""
-                  } text-slate-700 antialiased`}
-                  key={index}
-                >
-                  {element.field}
-                </div>
-              );
-            })}
+
             <div>
-              {state.order.map((element, index) => {
-                return element.type;
+              {state.layoutOrder.map((element, index) => {
+                if (element.type === "image")
+                  return <img key={index} src={state.images[element.index]} />;
+                if (element.type === "subtitle")
+                  return (
+                    <h2 key={index} className="text-xl font-semibold">
+                      {state.subtitles[element.index]}
+                    </h2>
+                  );
+                if (element.type === "paragraph")
+                  return <p key={index}>{state.paragraphs[element.index]}</p>;
               })}
             </div>
           </div>
