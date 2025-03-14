@@ -118,7 +118,25 @@ export default function AddNewArticle() {
           },
         }
       );
-      console.log(response);
+      console.log(response.data.data.doc);
+      if (response.statusText === "Created") {
+        const formData = new FormData();
+        state.images.forEach((file) => {
+          formData.append("images[]", file);
+        });
+        console.log(formData);
+        const uploadImages = await axios.patch(
+          `http://127.0.0.1:3000/api/v1/articles/${response.data.data.doc._id}`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${auth.token}`,
+            },
+          }
+        );
+        console.log(uploadImages);
+      }
     } catch (err) {
       console.log(err);
     } finally {
@@ -197,6 +215,8 @@ export default function AddNewArticle() {
               />
               <input
                 type="file"
+                multiple
+                accept="image/*"
                 disabled={notImage}
                 hidden={notImage}
                 onChange={handleChange}
