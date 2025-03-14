@@ -1,4 +1,6 @@
+import axios from "axios";
 import { useReducer, useState } from "react";
+import useAuth from "../hooks/useAuth";
 
 const initialState = {
   title: "",
@@ -59,7 +61,7 @@ function reducer(state, action) {
 export default function AddNewArticle() {
   const [text, setText] = useState(" ");
   const [state, dispatch] = useReducer(reducer, initialState);
-
+  const { auth } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [fieldType, setFieldType] = useState("title");
   const [notImage, setNotImage] = useState(true);
@@ -95,10 +97,35 @@ export default function AddNewArticle() {
     console.log(state);
   }
 
-  function saveArticle() {
+  async function saveArticle() {
     setIsLoading(true);
-    return 1;
+    try {
+      const articleData = {
+        title: state.title,
+        summary: state.summary,
+        subtitles: state.subtitles,
+        paragraphs: state.paragraphs,
+        layoutOrder: state.layoutOrder,
+      };
+
+      const response = await axios.post(
+        "http://127.0.0.1:3000/api/v1/articles/",
+        JSON.stringify(articleData),
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.token}`,
+          },
+        }
+      );
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsLoading(false);
+    }
   }
+
   return (
     <div>
       <div className="flex h-screen bg-gray-100">
