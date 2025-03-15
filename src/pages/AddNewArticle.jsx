@@ -61,6 +61,7 @@ function reducer(state, action) {
 export default function AddNewArticle() {
   const [text, setText] = useState(" ");
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [images, setImages] = useState([]);
   const { auth } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [fieldType, setFieldType] = useState("title");
@@ -76,9 +77,12 @@ export default function AddNewArticle() {
   }
 
   function handleChange(e) {
-    console.log(e.target.files);
+    console.log(e.target.files[0]);
+    if (e.target.files) {
+      setImages(() => [...images, e.target.files[0]]);
+    }
     const payload = URL.createObjectURL(e.target.files[0]);
-    console.log("state", state);
+
     dispatch({ type: "image", payload: payload });
   }
 
@@ -120,10 +124,9 @@ export default function AddNewArticle() {
       );
       console.log(response.data.data.doc);
       if (response.statusText === "Created") {
-        const formData = new FormData();
-        state.images.forEach((file) => {
-          formData.append("images[]", file);
-        });
+        const formData = new FormData(images);
+        console.log(images);
+
         console.log(formData);
         const uploadImages = await axios.patch(
           `http://127.0.0.1:3000/api/v1/articles/${response.data.data.doc._id}`,
