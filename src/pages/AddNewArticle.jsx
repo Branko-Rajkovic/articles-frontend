@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useReducer, useState } from "react";
 import useAuth from "../hooks/useAuth";
+import { NavLink } from "react-router-dom";
 
 const initialState = {
   title: "",
@@ -61,7 +62,7 @@ function reducer(state, action) {
 export default function AddNewArticle() {
   const [text, setText] = useState(" ");
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [images, setImages] = useState([]);
+  const [uploadedImages, setUploadedImages] = useState([]);
   const { auth } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [fieldType, setFieldType] = useState("title");
@@ -78,12 +79,14 @@ export default function AddNewArticle() {
 
   function handleChange(e) {
     console.log(e.target.files[0]);
+    console.log(uploadedImages);
     if (e.target.files) {
-      setImages(() => [...images, e.target.files[0]]);
+      setUploadedImages(() => [...uploadedImages, e.target.files[0]]);
     }
     const payload = URL.createObjectURL(e.target.files[0]);
 
     dispatch({ type: "image", payload: payload });
+    console.log(state.images);
   }
 
   function addField(e, type) {
@@ -124,8 +127,12 @@ export default function AddNewArticle() {
       );
       console.log(response.data.data.doc);
       if (response.statusText === "Created") {
-        const formData = new FormData(images);
-        console.log(images);
+        const formData = new FormData();
+        console.log("images", uploadedImages);
+        uploadedImages.forEach((image) => {
+          console.log(image);
+          formData.append("images", image);
+        });
 
         console.log(formData);
         const uploadImages = await axios.patch(
@@ -152,6 +159,12 @@ export default function AddNewArticle() {
       <div className="flex h-screen bg-gray-100">
         {/* Sidebar */}
         <div className="flex flex-col w-64 p-4 bg-white shadow-md">
+          <NavLink
+            to="/"
+            className="px-4 py-1 m-2 rounded-md w-fit bg-slate-600 text-slate-200 hover:bg-slate-200 hover:text-slate-600"
+          >
+            Home
+          </NavLink>
           <h2 className="mb-6 text-xl font-bold">Add Content</h2>
           <button
             onClick={() => addContent("title")}
