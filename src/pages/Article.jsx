@@ -34,7 +34,9 @@ export default function Content() {
                   return (
                     <img
                       key={index}
-                      src={data.data.doc.images[element.index]}
+                      src={`http://127.0.0.1:3000/images/articles/${
+                        data.data.doc.images[element.index]
+                      }`}
                     />
                   );
                 if (element.type === "subtitle")
