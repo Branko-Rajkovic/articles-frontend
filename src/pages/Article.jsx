@@ -27,15 +27,28 @@ export default function Content() {
           <>
             <h2 className="m-2 text-2xl font-bold">{data.data.doc.title}</h2>
             <p className="italic font-semibold">{data.data.doc.summary}</p>
-            <h3>{data.data.doc.subtitles[0]}</h3>
-            <p>{data.data.doc.paragraphs[0]}</p>
-            <ul>
-              {data.data.doc.lists[0].split(" ").map((item, index) => (
-                <li key={index}>{item}</li>
-              ))}
-            </ul>
-            <h3>{data.data.doc.subtitles[1]}</h3>
-            <p>{data.data.doc.paragraphs[1]}</p>
+
+            <div>
+              {data.data.doc.layoutOrder.map((element, index) => {
+                if (element.type === "image")
+                  return (
+                    <img
+                      key={index}
+                      src={data.data.doc.images[element.index]}
+                    />
+                  );
+                if (element.type === "subtitle")
+                  return (
+                    <h2 key={index} className="text-xl font-semibold">
+                      {data.data.doc.subtitles[element.index]}
+                    </h2>
+                  );
+                if (element.type === "paragraph")
+                  return (
+                    <p key={index}>{data.data.doc.paragraphs[element.index]}</p>
+                  );
+              })}
+            </div>
           </>
         )}
       </motion.div>
