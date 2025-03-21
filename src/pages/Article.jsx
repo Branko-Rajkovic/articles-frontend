@@ -4,6 +4,7 @@ import useFetchData from "../hooks/useFetchData";
 import Loader from "../components/Loader";
 import Error from "./Error";
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 export default function Content() {
   const params = useParams();
@@ -16,11 +17,12 @@ export default function Content() {
   if (error) return <Error />;
 
   return (
-    <main className="min-h-screen m-4">
+    <main className="page-bg">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
+        transition={{ delay: 0.1, duration: 0.3, ease: "easeInOut" }}
       >
         <Header />
         {!loading && (
@@ -53,6 +55,7 @@ export default function Content() {
             </div>
           </>
         )}
+        <Footer />
       </motion.div>
     </main>
   );

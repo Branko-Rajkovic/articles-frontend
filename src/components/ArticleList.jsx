@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { NavLink } from "react-router-dom";
 import useFetchData from "../hooks/useFetchData";
 import Loader from "./Loader";
@@ -14,11 +13,7 @@ export default function ArticleList() {
 
   return (
     <main className="min-h-screen m-4">
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-      >
+      <div>
         {!loading && (
           <ul>
             {data.data.docs.map((article) => {
@@ -39,7 +34,7 @@ export default function ArticleList() {
             })}
           </ul>
         )}
-      </motion.div>
+      </div>
     </main>
   );
 }

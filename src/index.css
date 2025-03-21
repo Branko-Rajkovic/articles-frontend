@@ -2,8 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  @apply box-border;
+}
+
 .page-bg {
-  @apply w-auto min-h-screen bg-slate-200;
+  @apply w-auto min-h-screen bg-slate-300;
 }
 
 .input {
@@ -19,7 +23,7 @@
 }
 
 .footer {
-  @apply mt-4 rounded-lg shadow bg-slate-100 dark:bg-slate-800;
+  @apply mt-4 shadow bg-slate-100 dark:bg-slate-800;
 }
 
 .footer div {
