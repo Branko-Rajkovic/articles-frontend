@@ -12,6 +12,7 @@ import Signin from "./pages/Signin";
 import ConfirmEmail from "./pages/ConfirmEmail";
 import MyAccount from "./pages/MyAccount";
 import Test from "./pages/test";
+import ManageUsers from "./pages/ManageUsers";
 
 export default function AnimatedRoutes() {
   const location = useLocation();
@@ -32,6 +33,7 @@ export default function AnimatedRoutes() {
 
           <Route element={<RequireAuth userRole={"admin"} />}>
             <Route path="/new-article" element={<AddNewArticle />} />
+            <Route path="/manage-users" element={<ManageUsers />} />
           </Route>
 
           <Route path="/articles/:articleId" element={<Article />} />

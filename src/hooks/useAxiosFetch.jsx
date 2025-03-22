@@ -1,6 +1,7 @@
+import axios from "axios";
 import { useState, useEffect } from "react";
 
-const useFetchData = (url, options) => {
+const useAxiosFetch = (url, headers) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -11,7 +12,7 @@ const useFetchData = (url, options) => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await fetch(url, options);
+        const response = await axios.get(url, headers);
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -30,9 +31,9 @@ const useFetchData = (url, options) => {
     return () => {
       isMounted = false; // Cleanup to prevent setting state on unmounted component
     };
-  }, [url]); // Re-fetch when `url` or `options` change
+  }, [url, headers]); // Re-fetch when `url` or `options` change
 
   return { data, loading, error };
 };
 
-export default useFetchData;
+export default useAxiosFetch;

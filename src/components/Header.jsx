@@ -27,7 +27,7 @@ function Header() {
               <NavLink to="/new-article">Add Article</NavLink>
             </span>
             <span className="link-anime">
-              <NavLink to="/all-articles">All Articles</NavLink>
+              <NavLink to="/manage-users">Manage Users</NavLink>
             </span>
           </div>
         )}
@@ -45,7 +45,7 @@ function Header() {
             <NavLink to="/my-account">
               <img
                 src={`http://127.0.0.1:3000/images/users/${auth.photo}`}
-                alt="page-404-image"
+                alt="user-photo"
                 className="w-12 m-2 border-2 rounded-full"
               />
             </NavLink>
