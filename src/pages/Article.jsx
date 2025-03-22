@@ -51,6 +51,15 @@ export default function Content() {
                   return (
                     <p key={index}>{data.data.doc.paragraphs[element.index]}</p>
                   );
+                if (element.type === "codeSnippet")
+                  return (
+                    <pre
+                      className="px-4 bg-slate-800 text-slate-200"
+                      key={index}
+                    >
+                      {data.data.doc.codeSnippets[element.index]}
+                    </pre>
+                  );
               })}
             </div>
           </>

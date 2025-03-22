@@ -8,6 +8,7 @@ const initialState = {
   summary: "",
   subtitles: [],
   paragraphs: [],
+  codeSnippets: [],
   images: [],
   layoutOrder: [],
 };
@@ -40,6 +41,15 @@ function reducer(state, action) {
         layoutOrder: [
           ...state.layoutOrder,
           { type: "subtitle", index: state.subtitles.length },
+        ],
+      };
+    case "codeSnippet":
+      return {
+        ...state,
+        codeSnippets: [...state.codeSnippets, action.payload],
+        layoutOrder: [
+          ...state.layoutOrder,
+          { type: "codeSnippet", index: state.codeSnippets.length },
         ],
       };
     case "image":
@@ -119,6 +129,7 @@ export default function AddNewArticle() {
         summary: state.summary,
         subtitles: state.subtitles,
         paragraphs: state.paragraphs,
+        codeSnippets: state.codeSnippets,
         layoutOrder: state.layoutOrder,
       };
 
@@ -175,7 +186,7 @@ export default function AddNewArticle() {
           <h2 className="mb-6 text-xl font-bold">Add Content</h2>
           <button
             onClick={() => addContent("title")}
-            className="px-4 py-2 mb-2 font-semibold text-white rounded bg-slate-800 hover:bg-slate-500"
+            className="px-4 py-2 mb-2 font-semibold text-white rounded bg-sky-800 hover:bg-sky-950"
           >
             Title
           </button>
@@ -191,11 +202,19 @@ export default function AddNewArticle() {
           >
             Subtitle
           </button>
+
           <button
             onClick={() => addContent("paragraph")}
             className="px-4 py-2 mb-2 font-semibold text-white bg-blue-500 rounded hover:bg-blue-700"
           >
             Paragraph
+          </button>
+
+          <button
+            onClick={() => addContent("codeSnippet")}
+            className="px-4 py-2 mb-2 font-semibold text-white rounded bg-slate-800 hover:bg-slate-600"
+          >
+            Code Snippet
           </button>
 
           <button
@@ -280,6 +299,15 @@ export default function AddNewArticle() {
                 if (element.type === "paragraph")
                   return (
                     <pre key={index}>{state.paragraphs[element.index]}</pre>
+                  );
+                if (element.type === "codeSnippet")
+                  return (
+                    <pre
+                      className="px-4 bg-slate-800 text-slate-200"
+                      key={index}
+                    >
+                      {state.codeSnippets[element.index]}
+                    </pre>
                   );
               })}
             </div>
