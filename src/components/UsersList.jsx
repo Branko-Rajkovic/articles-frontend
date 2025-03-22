@@ -20,6 +20,7 @@ export default function UsersList() {
   if (error) return <Error />;
 
   async function handleDelete(id) {
+    console.log(id);
     try {
       const result = await axios.delete(
         `http://127.0.0.1:3000/api/v1/users/${id}`,
@@ -43,7 +44,7 @@ export default function UsersList() {
         {!loading && (
           <ul>
             {data.data.docs.map((user) => {
-              const id = user.id;
+              const id = user._id;
               const name = user.name;
               const email = user.email;
               const photo = user.photo;
