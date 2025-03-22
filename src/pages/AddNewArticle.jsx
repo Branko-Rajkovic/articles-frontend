@@ -52,6 +52,9 @@ function reducer(state, action) {
         ],
       };
 
+    case "deleteAll":
+      return initialState;
+
     default:
       return {
         state,
@@ -71,6 +74,10 @@ export default function AddNewArticle() {
   function addContent(field) {
     field === "image" ? setNotImage(false) : setNotImage(true);
     setFieldType(field);
+  }
+
+  function deleteContent(content) {
+    dispatch({ type: content });
   }
 
   function handleTextChange(e) {
@@ -168,7 +175,7 @@ export default function AddNewArticle() {
           <h2 className="mb-6 text-xl font-bold">Add Content</h2>
           <button
             onClick={() => addContent("title")}
-            className="px-4 py-2 mb-2 font-semibold text-white bg-red-500 rounded hover:bg-red-700"
+            className="px-4 py-2 mb-2 font-semibold text-white rounded bg-slate-800 hover:bg-slate-500"
           >
             Title
           </button>
@@ -196,6 +203,13 @@ export default function AddNewArticle() {
             className="px-4 py-2 mb-2 font-semibold text-white rounded bg-emerald-400 hover:bg-emerald-700"
           >
             Image
+          </button>
+
+          <button
+            onClick={() => deleteContent("deleteAll")}
+            className="px-4 py-2 mb-2 font-semibold text-white bg-red-500 rounded hover:bg-red-700"
+          >
+            Delete All
           </button>
 
           <div className="mt-auto">
@@ -264,7 +278,9 @@ export default function AddNewArticle() {
                     </h2>
                   );
                 if (element.type === "paragraph")
-                  return <p key={index}>{state.paragraphs[element.index]}</p>;
+                  return (
+                    <pre key={index}>{state.paragraphs[element.index]}</pre>
+                  );
               })}
             </div>
           </div>
