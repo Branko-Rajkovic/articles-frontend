@@ -7,7 +7,7 @@ function Header() {
   console.log("auth", auth);
   return (
     <header>
-      <div className="flex m-2">
+      <div className="flex justify-center p-2 bg-slate-700">
         <div>
           <span className="link-anime">
             <NavLink to="/">Home</NavLink>

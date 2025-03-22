@@ -64,8 +64,8 @@ export default function Content() {
             </div>
           </>
         )}
-        <Footer />
       </motion.div>
+      <Footer />
     </main>
   );
 }

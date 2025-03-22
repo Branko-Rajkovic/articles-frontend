@@ -7,7 +7,7 @@
 }
 
 .page-bg {
-  @apply w-auto min-h-screen bg-slate-300;
+  @apply flex flex-col justify-between w-auto min-h-screen bg-slate-300;
 }
 
 .input {
@@ -23,7 +23,7 @@
 }
 
 .footer {
-  @apply mt-4 shadow bg-slate-100 dark:bg-slate-800;
+  @apply sticky bottom-0 w-full mt-4 shadow bg-slate-100 dark:bg-slate-800;
 }
 
 .footer div {
@@ -43,5 +43,5 @@
 }
 
 .link-anime {
-  @apply p-2 mr-4 transition duration-200 ease-in-out delay-150 border-2 text-slate-200 border-slate-700 bg-slate-600 hover:-translate-y-1 hover:scale-110 hover:bg-slate-500;
+  @apply p-2 mr-1 transition duration-200 ease-in-out delay-150 text-slate-200 hover:-translate-y-1 hover:scale-110 hover:bg-slate-500;
 }

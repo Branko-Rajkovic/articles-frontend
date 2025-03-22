@@ -86,9 +86,8 @@ export default function Login() {
 
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col p-2 m-2 border rounded-sm"
+        className="flex flex-col p-2 m-2 rounded-sm"
       >
-        <h1 className="font-semibold text-slate-200">Log In</h1>
         <label htmlFor="email" className="text-slate-300">
           email:
         </label>
@@ -117,7 +116,7 @@ export default function Login() {
         />
         <button
           type="submit"
-          className="px-4 py-1 mx-2 my-1 rounded-sm text-slate-200 bg-slate-600 hover:bg-emerald-200 hover:text-slate-600"
+          className="px-2 py-1 mx-2 my-1 rounded-sm w-fit text-slate-200 bg-slate-800 hover:bg-emerald-200 hover:text-slate-600"
         >
           Log In
         </button>
