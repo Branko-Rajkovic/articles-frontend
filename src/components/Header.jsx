@@ -7,21 +7,29 @@ function Header() {
   console.log("auth", auth);
   return (
     <header>
-      <div className="m-2">
-        <span className="link-anime">
-          <NavLink to="/">Home</NavLink>
-        </span>
-        <span className="link-anime">
-          <NavLink to="/about">About</NavLink>
-        </span>
-
-        <span className="link-anime">
-          <NavLink to="/contact">Contact</NavLink>
-        </span>
-        {auth.role === "admin" && (
+      <div className="flex m-2">
+        <div>
           <span className="link-anime">
-            <NavLink to="/new-article">Add Article</NavLink>
+            <NavLink to="/">Home</NavLink>
           </span>
+          <span className="link-anime">
+            <NavLink to="/about">About</NavLink>
+          </span>
+
+          <span className="link-anime">
+            <NavLink to="/contact">Contact</NavLink>
+          </span>
+        </div>
+
+        {auth.role === "admin" && (
+          <div>
+            <span className="link-anime">
+              <NavLink to="/new-article">Add Article</NavLink>
+            </span>
+            <span className="link-anime">
+              <NavLink to="/all-articles">All Articles</NavLink>
+            </span>
+          </div>
         )}
       </div>
       <div className="flex items-center justify-between bg-slate-500">
