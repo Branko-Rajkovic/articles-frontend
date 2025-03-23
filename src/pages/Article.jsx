@@ -26,8 +26,10 @@ export default function Content() {
       >
         <Header />
         {!loading && (
-          <>
-            <h2 className="m-2 text-2xl font-bold">{data.data.doc.title}</h2>
+          <div className="flex flex-col items-center mx-4">
+            <h2 className="m-2 text-4xl font-bold text-slate-500">
+              {data.data.doc.title}
+            </h2>
             <p className="italic font-semibold">{data.data.doc.summary}</p>
 
             <div>
@@ -43,7 +45,7 @@ export default function Content() {
                   );
                 if (element.type === "subtitle")
                   return (
-                    <h2 key={index} className="text-xl font-semibold">
+                    <h2 key={index} className="my-2 text-xl font-semibold">
                       {data.data.doc.subtitles[element.index]}
                     </h2>
                   );
@@ -54,7 +56,7 @@ export default function Content() {
                 if (element.type === "codeSnippet")
                   return (
                     <pre
-                      className="px-4 bg-slate-800 text-slate-200"
+                      className="px-4 mx-8 bg-slate-800 text-slate-200"
                       key={index}
                     >
                       {data.data.doc.codeSnippets[element.index]}
@@ -62,7 +64,7 @@ export default function Content() {
                   );
               })}
             </div>
-          </>
+          </div>
         )}
       </motion.div>
       <Footer />
