@@ -41,17 +41,21 @@ export default function EditArticle() {
     console.log(uploadImages);
   }
 
-  function handleDelete(field) {
-    setUpdates(() => {
-      return { ...updates, field };
-    });
+  function handleDelete(field, index) {
+    if (field === "subtitle") {
+      data.data.doc.subtitles[index] = "";
+
+      setUpdates(() => {
+        return { ...data.data.doc };
+      });
+    }
   }
 
   if (loading) return <Loader />;
   if (error) return <Error />;
 
   return (
-    <main className="w-screen page-bg">
+    <main className="page-bg">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -91,32 +95,35 @@ export default function EditArticle() {
                         {data.data.doc.subtitles[element.index]}
                       </h2>
                       <div className="flex">
-                        <button className="px-2 py-1 rounded-sm bg-amber-300 hover:bg-amber-500 text-amber-900">
+                        <button className="px-2 py-1 mx-2 rounded-sm bg-amber-300 hover:bg-amber-500 text-amber-900">
                           Edit
                         </button>
                         <button
-                          className="px-2 py-1 text-red-900 bg-red-300 rounded-sm hover:bg-red-500"
-                          onClick={() => handleDelete("someField")}
+                          className="px-2 py-1 mx-2 text-red-900 bg-red-300 rounded-sm hover:bg-red-500"
+                          onClick={() =>
+                            handleDelete("subtitle", element.index)
+                          }
                         >
                           Delete
+                        </button>
+                        <button className="px-2 py-1 mx-2 text-red-900 bg-red-300 rounded-sm hover:bg-red-500">
+                          Add
                         </button>
                       </div>
                     </div>
                   );
                 if (element.type === "paragraph")
                   return (
-                    <pre key={index}>
-                      {data.data.doc.paragraphs[element.index]}
-                    </pre>
+                    <p key={index}>{data.data.doc.paragraphs[element.index]}</p>
                   );
                 if (element.type === "codeSnippet")
                   return (
-                    <pre
+                    <p
                       className="px-4 mx-8 bg-slate-800 text-slate-200"
                       key={index}
                     >
                       {data.data.doc.codeSnippets[element.index]}
-                    </pre>
+                    </p>
                   );
               })}
             </div>
