@@ -19,7 +19,7 @@ export default function EditArticle() {
     images: [],
     layoutOrder: [],
   });
-
+  const [change, setChange] = useState(true);
   const { auth } = useAuth();
   const params = useParams();
 
@@ -39,6 +39,10 @@ export default function EditArticle() {
       }
     );
     console.log(uploadImages);
+  }
+
+  function handleEdit() {
+    setChange(false);
   }
 
   function handleDelete(field, index) {
@@ -70,6 +74,12 @@ export default function EditArticle() {
         >
           Save Changes
         </button>
+        <button
+          className="px-2 py-1 mx-2 rounded-sm bg-amber-300 hover:bg-amber-500 text-amber-900"
+          onClick={() => handleEdit()}
+        >
+          Enable Editing
+        </button>
         {!loading && (
           <div className="flex flex-col items-center mx-4">
             <h2 className="m-2 text-4xl font-bold text-slate-500">
@@ -91,11 +101,19 @@ export default function EditArticle() {
                 if (element.type === "subtitle")
                   return (
                     <div key={index} className="m-2 border">
+                      <input
+                        type="text"
+                        value={data.data.doc.subtitles[element.index]}
+                        disabled={change}
+                      />
                       <h2 className="my-2 text-xl font-semibold">
                         {data.data.doc.subtitles[element.index]}
                       </h2>
                       <div className="flex">
-                        <button className="px-2 py-1 mx-2 rounded-sm bg-amber-300 hover:bg-amber-500 text-amber-900">
+                        <button
+                          className="px-2 py-1 mx-2 rounded-sm bg-amber-300 hover:bg-amber-500 text-amber-900"
+                          onClick={() => handleEdit()}
+                        >
                           Edit
                         </button>
                         <button
