@@ -59,9 +59,12 @@ export default function ArticleList() {
 
                     {auth.role === "admin" && (
                       <div>
-                        <button className="px-2 py-1 rounded-sm bg-amber-300 hover:bg-amber-500 text-amber-900">
+                        <NavLink
+                          to={`/edit-article/${article.id}`}
+                          className="px-2 py-1 rounded-sm bg-amber-300 hover:bg-amber-500 text-amber-900"
+                        >
                           Edit
-                        </button>
+                        </NavLink>
                         <button
                           className="px-2 py-1 text-red-900 bg-red-300 rounded-sm hover:bg-red-500"
                           onClick={() => handleDelete(article.id)}
