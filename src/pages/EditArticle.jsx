@@ -19,7 +19,7 @@ export default function EditArticle() {
     images: [],
     layoutOrder: [],
   });
-  const [change, setChange] = useState(true);
+  const [editMode, setEditMode] = useState(true);
   const { auth } = useAuth();
   const params = useParams();
 
@@ -42,7 +42,25 @@ export default function EditArticle() {
   }
 
   function handleEdit() {
-    setChange(false);
+    setEditMode(false);
+  }
+
+  function updateField(event, index) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const formInput = Object.fromEntries(formData.entries());
+
+    console.log(formInput);
+
+    data.data.doc.subtitles[index] = formInput.subtitle;
+
+    setUpdates(() => {
+      return {
+        ...data.data.doc,
+      };
+    });
+
+    setEditMode(true);
   }
 
   function handleDelete(field, index) {
@@ -72,7 +90,7 @@ export default function EditArticle() {
           className="px-2 py-1 text-red-900 bg-red-300 rounded-sm hover:bg-red-500"
           onClick={() => saveChanges(params.articleId)}
         >
-          Save Changes
+          Save Document
         </button>
         <button
           className="px-2 py-1 mx-2 rounded-sm bg-amber-300 hover:bg-amber-500 text-amber-900"
@@ -101,29 +119,36 @@ export default function EditArticle() {
                 if (element.type === "subtitle")
                   return (
                     <div key={index} className="m-2 border">
-                      <input
-                        type="text"
-                        value={data.data.doc.subtitles[element.index]}
-                        disabled={change}
-                      />
-                      <h2 className="my-2 text-xl font-semibold">
-                        {data.data.doc.subtitles[element.index]}
-                      </h2>
-                      <div className="flex">
+                      <form
+                        onSubmit={(event) => updateField(event, element.index)}
+                      >
+                        <input
+                          type="text"
+                          name="subtitle"
+                          defaultValue={data.data.doc.subtitles[element.index]}
+                          hidden={editMode}
+                        />
+                        <h2
+                          className="my-2 text-xl font-semibold"
+                          hidden={!editMode}
+                        >
+                          {data.data.doc.subtitles[element.index]}
+                        </h2>
                         <button
                           className="px-2 py-1 mx-2 rounded-sm bg-amber-300 hover:bg-amber-500 text-amber-900"
-                          onClick={() => handleEdit()}
+                          type="submit"
                         >
                           Edit
                         </button>
-                        <button
-                          className="px-2 py-1 mx-2 text-red-900 bg-red-300 rounded-sm hover:bg-red-500"
-                          onClick={() =>
-                            handleDelete("subtitle", element.index)
-                          }
-                        >
-                          Delete
-                        </button>
+                      </form>
+
+                      <button
+                        className="px-2 py-1 mx-2 text-red-900 bg-red-300 rounded-sm hover:bg-red-500"
+                        onClick={() => handleDelete("subtitle", element.index)}
+                      >
+                        Delete
+                      </button>
+                      <div className="flex">
                         <button className="px-2 py-1 mx-2 text-red-900 bg-red-300 rounded-sm hover:bg-red-500">
                           Add
                         </button>
