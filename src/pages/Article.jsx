@@ -26,13 +26,13 @@ export default function Content() {
       >
         <Header />
         {!loading && (
-          <div className="flex flex-col items-center mx-4">
+          <div className="flex flex-col items-center m-4">
             <h2 className="m-2 text-4xl font-bold text-slate-500">
               {data.data.doc.title}
             </h2>
             <p className="italic font-semibold">{data.data.doc.summary}</p>
 
-            <div>
+            <div className="m-4">
               {data.data.doc.layoutOrder.map((element, index) => {
                 if (element.type === "image")
                   return (

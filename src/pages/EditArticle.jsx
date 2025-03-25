@@ -19,7 +19,7 @@ export default function EditArticle() {
     images: [],
     layoutOrder: [],
   });
-  const [editMode, setEditMode] = useState(true);
+  const [editMode, setEditMode] = useState(false);
   const { auth } = useAuth();
   const params = useParams();
 
@@ -42,7 +42,7 @@ export default function EditArticle() {
   }
 
   function handleEdit() {
-    setEditMode(false);
+    setEditMode(true);
   }
 
   function updateField(event, index) {
@@ -126,17 +126,18 @@ export default function EditArticle() {
                           type="text"
                           name="subtitle"
                           defaultValue={data.data.doc.subtitles[element.index]}
-                          hidden={editMode}
+                          hidden={!editMode}
                         />
                         <h2
                           className="my-2 text-xl font-semibold"
-                          hidden={!editMode}
+                          hidden={editMode}
                         >
                           {data.data.doc.subtitles[element.index]}
                         </h2>
                         <button
                           className="px-2 py-1 mx-2 rounded-sm bg-amber-300 hover:bg-amber-500 text-amber-900"
                           type="submit"
+                          hidden={!editMode}
                         >
                           Edit
                         </button>
@@ -145,11 +146,15 @@ export default function EditArticle() {
                       <button
                         className="px-2 py-1 mx-2 text-red-900 bg-red-300 rounded-sm hover:bg-red-500"
                         onClick={() => handleDelete("subtitle", element.index)}
+                        hidden={!editMode}
                       >
                         Delete
                       </button>
                       <div className="flex">
-                        <button className="px-2 py-1 mx-2 text-red-900 bg-red-300 rounded-sm hover:bg-red-500">
+                        <button
+                          className="px-2 py-1 mx-2 text-red-900 bg-red-300 rounded-sm hover:bg-red-500"
+                          hidden={!editMode}
+                        >
                           Add
                         </button>
                       </div>
