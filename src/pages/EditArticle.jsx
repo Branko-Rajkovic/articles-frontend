@@ -51,8 +51,15 @@ export default function EditArticle() {
     const formInput = Object.fromEntries(formData.entries());
 
     console.log(formInput);
-
-    data.data.doc.subtitles[index] = formInput.subtitle;
+    if (formInput.subtitle) {
+      data.data.doc.subtitles[index] = formInput.subtitle;
+    }
+    if (formInput.paragraph) {
+      data.data.doc.paragraphs[index] = formInput.paragraph;
+    }
+    if (formInput.codeSnippet) {
+      data.data.doc.codeSnippets[index] = formInput.codeSnippet;
+    }
 
     setUpdates(() => {
       return {
@@ -155,23 +162,99 @@ export default function EditArticle() {
                           className="px-2 py-1 mx-2 text-red-900 bg-red-300 rounded-sm hover:bg-red-500"
                           hidden={!editMode}
                         >
-                          Add
+                          + Add
                         </button>
                       </div>
                     </div>
                   );
                 if (element.type === "paragraph")
                   return (
-                    <p key={index}>{data.data.doc.paragraphs[element.index]}</p>
+                    <div key={index}>
+                      <p hidden={editMode}>
+                        {data.data.doc.paragraphs[element.index]}
+                      </p>
+                      <form
+                        onSubmit={(event) => updateField(event, element.index)}
+                      >
+                        <textarea
+                          name="paragraph"
+                          cols="60"
+                          rows="3"
+                          defaultValue={data.data.doc.paragraphs[element.index]}
+                          hidden={!editMode}
+                        />
+                        <button
+                          className="px-2 py-1 mx-2 rounded-sm bg-amber-300 hover:bg-amber-500 text-amber-900"
+                          type="submit"
+                          hidden={!editMode}
+                        >
+                          Edit
+                        </button>
+                      </form>
+                      <button
+                        className="px-2 py-1 mx-2 text-red-900 bg-red-300 rounded-sm hover:bg-red-500"
+                        onClick={() => handleDelete("paragraph", element.index)}
+                        hidden={!editMode}
+                      >
+                        Delete
+                      </button>
+                      <div className="flex">
+                        <button
+                          className="px-2 py-1 mx-2 text-red-900 bg-red-300 rounded-sm hover:bg-red-500"
+                          hidden={!editMode}
+                        >
+                          + Add
+                        </button>
+                      </div>
+                    </div>
                   );
                 if (element.type === "codeSnippet")
                   return (
-                    <p
-                      className="px-4 mx-8 bg-slate-800 text-slate-200"
-                      key={index}
-                    >
-                      {data.data.doc.codeSnippets[element.index]}
-                    </p>
+                    <div key={index}>
+                      <p
+                        className="px-4 mx-8 bg-slate-800 text-slate-200"
+                        hidden={editMode}
+                      >
+                        {data.data.doc.codeSnippets[element.index]}
+                      </p>
+                      <form
+                        onSubmit={(event) => updateField(event, element.index)}
+                      >
+                        <textarea
+                          name="codeSnippet"
+                          cols="60"
+                          rows="3"
+                          defaultValue={
+                            data.data.doc.codeSnippets[element.index]
+                          }
+                          hidden={!editMode}
+                        />
+                        <button
+                          className="px-2 py-1 mx-2 rounded-sm bg-amber-300 hover:bg-amber-500 text-amber-900"
+                          type="submit"
+                          hidden={!editMode}
+                        >
+                          Edit
+                        </button>
+                      </form>
+                      <button
+                        className="px-2 py-1 mx-2 text-red-900 bg-red-300 rounded-sm hover:bg-red-500"
+                        onClick={() =>
+                          handleDelete("codeSnippet", element.index)
+                        }
+                        hidden={!editMode}
+                      >
+                        Delete
+                      </button>
+                      <div className="flex">
+                        <button
+                          className="px-2 py-1 mx-2 text-red-900 bg-red-300 rounded-sm hover:bg-red-500"
+                          hidden={!editMode}
+                        >
+                          + Add
+                        </button>
+                      </div>
+                    </div>
                   );
               })}
             </div>
