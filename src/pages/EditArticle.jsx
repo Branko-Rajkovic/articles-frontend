@@ -19,6 +19,7 @@ export default function EditArticle() {
     images: [],
     layoutOrder: [],
   });
+  const [updatedImages, setUpdatedImages] = useState([]);
   const [editMode, setEditMode] = useState(false);
   const { auth } = useAuth();
   const params = useParams();
@@ -28,21 +29,66 @@ export default function EditArticle() {
   );
 
   async function saveChanges(id) {
-    const uploadImages = await axios.patch(
-      `http://127.0.0.1:3000/api/v1/articles/${id}`,
-      updates,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${auth.token}`,
-        },
+    try {
+      const result = await axios.patch(
+        `http://127.0.0.1:3000/api/v1/articles/${id}`,
+        updates,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.token}`,
+          },
+        }
+      );
+      console.log(result);
+      if (updatedImages) {
+        const formData = new FormData();
+        console.log("images", updatedImages);
+        updatedImages.forEach((image) => {
+          console.log(image);
+          formData.append("images", image);
+        });
+
+        console.log(formData);
+        const uploadImages = await axios.patch(
+          `http://127.0.0.1:3000/api/v1/articles/${data.data.doc._id}`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${auth.token}`,
+            },
+          }
+        );
+        console.log(uploadImages);
       }
-    );
-    console.log(uploadImages);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      console.log("saving to the server action ended.");
+    }
   }
 
   function handleEdit() {
     setEditMode(true);
+  }
+
+  function handleChange(event, index) {
+    console.log(event.target.files[0]);
+    console.log(updatedImages);
+    if (event.target.files) {
+      setUpdatedImages(() => [...updatedImages, event.target.files[0]]);
+    }
+    const newImage = URL.createObjectURL(event.target.files[0]);
+
+    data.data.doc.images[index] = newImage;
+
+    setUpdates(() => {
+      return {
+        ...data.data.doc,
+      };
+    });
+    console.log(updates.images);
   }
 
   function updateField(event, index) {
@@ -59,6 +105,12 @@ export default function EditArticle() {
     }
     if (formInput.codeSnippet) {
       data.data.doc.codeSnippets[index] = formInput.codeSnippet;
+    }
+    if (formInput.image) {
+      data.data.doc.images[index] = formInput.image;
+      if (event.target.files) {
+        setUpdatedImages(() => [...updatedImages, event.target.files[0]]);
+      }
     }
 
     setUpdates(() => {
@@ -116,12 +168,29 @@ export default function EditArticle() {
               {data.data.doc.layoutOrder.map((element, index) => {
                 if (element.type === "image")
                   return (
-                    <img
-                      key={index}
-                      src={`http://127.0.0.1:3000/images/articles/${
-                        data.data.doc.images[element.index]
-                      }`}
-                    />
+                    <div key={index}>
+                      <img
+                        src={`http://127.0.0.1:3000/images/articles/${
+                          data.data.doc.images[element.index]
+                        }`}
+                      />
+                      <img
+                        hidden={!editMode}
+                        src={data.data.doc.images[element.index]}
+                      />
+                      <form>
+                        <input
+                          type="file"
+                          multiple
+                          name="image"
+                          accept="image/*"
+                          hidden={!editMode}
+                          onChange={(event) =>
+                            handleChange(event, element.index)
+                          }
+                        />
+                      </form>
+                    </div>
                   );
                 if (element.type === "subtitle")
                   return (
