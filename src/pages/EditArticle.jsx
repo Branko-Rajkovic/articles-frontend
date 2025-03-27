@@ -70,7 +70,7 @@ export default function EditArticle() {
   }
 
   function handleEdit() {
-    setEditMode(true);
+    setEditMode(() => !editMode);
   }
 
   function handleChange(event, index) {
@@ -155,7 +155,7 @@ export default function EditArticle() {
           className="px-2 py-1 mx-2 rounded-sm bg-amber-300 hover:bg-amber-500 text-amber-900"
           onClick={() => handleEdit()}
         >
-          Enable Editing
+          {!editMode ? "Enable Editing" : "Disable Editing"}
         </button>
         {!loading && (
           <div className="flex flex-col items-center mx-4">
