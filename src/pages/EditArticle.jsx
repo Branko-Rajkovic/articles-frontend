@@ -43,6 +43,7 @@ export default function EditArticle() {
       console.log(result);
       if (updatedImages) {
         const formData = new FormData();
+
         console.log("images", updatedImages);
         updatedImages.forEach((image) => {
           console.log(image);
@@ -75,6 +76,10 @@ export default function EditArticle() {
 
   function handleChange(event, index) {
     console.log(event.target.files[0]);
+    console.log("length", updatedImages.length);
+    if (updatedImages.length === 0) {
+      setUpdatedImages(() => [...data.data.doc.images]);
+    }
     console.log(updatedImages);
     if (event.target.files) {
       setUpdatedImages(() => [...updatedImages, event.target.files[0]]);
